@@ -20,12 +20,77 @@ public class Main {
 
         int[][] twoDArray = {{0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11}, {12, 13, 14, 15}};
 
-        print4x4Array(twoDArray);
-        int[][] newArr = RotateArray(twoDArray);
-        System.out.println();
-        print4x4Array(newArr);
+        //print4x4Array(twoDArray);
+        //int[][] newArr = RotateArray(twoDArray);
+        //System.out.println();
+        //print4x4Array(newArr);
+
+        String input1 = "bake";
+        input2 = "pale";
+
+        System.out.println("oneAway: " + oneAway(input1, input2));
 
 	// write your code here
+    }
+
+
+    public static boolean oneAway(String input1, String input2){
+        if(input1.equals(input2)){//quick check
+            return true;
+        }
+
+        int dist = input1.length() - input2.length();
+        if(dist == 0){//matching length. check for replacement
+            char[] input1a = input1.toCharArray();
+            //Arrays.sort(input1a);
+            char[] input2a = input2.toCharArray();
+            //Arrays.sort(input2a);
+            int arrdist = 0;
+            for(int i = 0; i < input1a.length; i++){
+                System.out.println(input1a[i] + " " + input2a[i]);
+                System.out.println(arrdist);
+                if(input1a[i] != input2a[i]){
+                    arrdist++;
+                    if(arrdist > 1){
+                        System.out.println("Hello");
+                        return false;
+                    }
+                }
+            }
+            if(arrdist <= 1){
+                return true;
+            }
+        }
+        if(dist == -1 || dist == 1){//one away. Check for addition/removal
+            char[] input1a = input1.toCharArray();
+            //Arrays.sort(input1a);
+            char[] input2a = input2.toCharArray();
+            //Arrays.sort(input2a);
+
+            int index1 = 0;
+            int index2 = 0;
+            int arrdist = 0;
+            while(index1 < input1a.length && index2 < input2a.length){
+                if(input1a[index1] != input2a[index2]){
+                    //skip this letter in the longer string and see if the rest match
+                    if(dist == -1)
+                        index2++;
+                    else
+                        index1++;
+                    arrdist++;
+                    if(arrdist > 1){
+                        return false;
+                    }
+                }
+                index1++;
+                index2++;
+            }
+            if(arrdist <= 1){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     static int[][] RotateArray(int[][] arr){
